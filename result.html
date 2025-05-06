@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>📊 النتيجة - خارج المدار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>📊 نتائج التصويت</h2>
+    <div id="results"></div>
+    <div id="outcome"></div>
+    <button onclick="startNewRound()">🔁 جولة جديدة</button>
+  </div>
+
+  <script>
+    const votes = JSON.parse(localStorage.getItem("votes")) || {};
+    const realOddOne = localStorage.getItem("oddOneOut");
+
+    const resultsDiv = document.getElementById("results");
+    for (const player in votes) {
+      const p = document.createElement("p");
+      p.textContent = `🗳️ ${player} حصل على ${votes[player]} صوت`;
+      resultsDiv.appendChild(p);
+    }
+
+    const max = Math.max(...Object.values(votes));
+    const mostVoted = Object.keys(votes).find(p => votes[p] === max);
+
+    const outcome = document.getElementById("outcome");
+    outcome.innerHTML = `
+      <h3>🎯 المتهم الأكبر: <strong>${mostVoted}</strong></h3>
+      <p>${mostVoted === realOddOne ? "✅ صحيح! تم كشف برا السالفة." : "❌ خطأ! ما تم كشفه."}</p>
+    `;
+
+    function startNewRound() {
+      localStorage.removeItem("votes");
+      window.location.href = "game.html";
+    }
+  </script>
+</body>
+</html>
