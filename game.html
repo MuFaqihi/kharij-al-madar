@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>جولة اللعب - خارج المدار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>🎭 جولة جديدة!</h2>
+
+    <div class="topic-box">
+      <h3>🧠 السالفة:</h3>
+      <p id="topic">...</p>
+    </div>
+
+    <div id="players">
+      <h3>👥 اللاعبون:</h3>
+      <ul id="playerList"></ul>
+    </div>
+
+    <button onclick="startVoting()">🗳️ انتهى النقاش، فلنصوّت</button>
+  </div>
+
+  <script>
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+    const topicList = ["الفضاء", "الرحلات البرية", "التسوق", "الألعاب", "القهوة"];
+    const selectedTopic = topicList[Math.floor(Math.random() * topicList.length)];
+    const oddOneOut = players[Math.floor(Math.random() * players.length)];
+
+    localStorage.setItem("topic", selectedTopic);
+    localStorage.setItem("oddOneOut", oddOneOut);
+
+    document.getElementById("topic").textContent = selectedTopic;
+
+    const list = document.getElementById("playerList");
+    players.forEach(name => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      list.appendChild(li);
+    });
+
+    alert("📢 واحد من اللاعبين لا يعرف السالفة. ناقشوا ثم صوّتوا!");
+
+    function startVoting() {
+      window.location.href = "vote.html";
+    }
+  </script>
+</body>
+</html>
