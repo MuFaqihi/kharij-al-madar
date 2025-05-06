@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>اللعب المحلي - خارج المدار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>👥 إضافة اللاعبين</h2>
+    <form id="playersForm">
+      <input type="text" placeholder="اسم اللاعب" required>
+      <button type="button" onclick="addPlayer()">➕ إضافة</button>
+      <ul id="playerList"></ul>
+      <button type="submit">🚀 ابدأ اللعبة</button>
+    </form>
+  </div>
+
+  <script>
+    const playerInput = document.querySelector("input");
+    const playerList = document.getElementById("playerList");
+    const players = [];
+
+    function addPlayer() {
+      if (playerInput.value.trim()) {
+        players.push(playerInput.value.trim());
+        const li = document.createElement("li");
+        li.textContent = playerInput.value.trim();
+        playerList.appendChild(li);
+        playerInput.value = "";
+      }
+    }
+
+    document.getElementById("playersForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (players.length >= 3) {
+        localStorage.setItem("players", JSON.stringify(players));
+        window.location.href = "game.html";
+      } else {
+        alert("يجب إدخال 3 لاعبين على الأقل.");
+      }
+    });
+  </script>
+</body>
+</html>
